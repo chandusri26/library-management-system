@@ -12,6 +12,7 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private BookRepository bookRepository;
 
+    // Existing methods
     @Override
     public Book saveBook(Book book) {
         return bookRepository.save(book);
@@ -43,5 +44,28 @@ public class BookServiceImpl implements BookService {
     @Override
     public void deleteBook(Long id) {
         bookRepository.deleteById(id);
+    }
+
+    // New methods for issue and return
+    @Override
+    public void issueBook(Long id) {
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found"));
+        if (!book.isAvailable()) {
+            throw new RuntimeException("Book is already issued");
+        }
+        book.setAvailable(false); // Mark as issued
+        bookRepository.save(book);
+    }
+
+    @Override
+    public void returnBook(Long id) {
+        Book book = bookRepository.findById(id)
+            .orElseThrow(() -> new RuntimeException("Book not found"));
+        if (book.isAvailable()) {
+            throw new RuntimeException("Book is already available");
+        }
+        book.setAvailable(true); // Mark as returned
+        bookRepository.save(book);
     }
 }
