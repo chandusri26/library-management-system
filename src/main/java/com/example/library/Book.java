@@ -15,6 +15,9 @@ public class Book {
     private String author;
     private String isbn;
 
+    // New field for book availability
+    private boolean isAvailable = true; // default: available
+
     public Book() {
     }
 
@@ -22,6 +25,7 @@ public class Book {
         this.title = title;
         this.author = author;
         this.isbn = isbn;
+        this.isAvailable = true; // default available
     }
 
     // Getters and Setters
@@ -55,5 +59,14 @@ public class Book {
 
     public void setIsbn(String isbn) {
         this.isbn = isbn;
+    }
+
+    // Getter and Setter for availability
+    public boolean isAvailable() {
+        return isAvailable;
+    }
+
+    public void setAvailable(boolean isAvailable) {
+        this.isAvailable = isAvailable;
     }
 }
